@@ -1,6 +1,7 @@
 plugins {
   id 'java'
   id 'com.adarshr.test-logger' version '2.1.1'
+  id 'io.freefair.lombok' version '6.6.1'
 }
 
 repositories {
@@ -11,6 +12,8 @@ dependencies {
   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0-M1'
   testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.0-M1'
   testImplementation 'org.assertj:assertj-core:3.19.0'
+  implementation 'org.projectlombok:lombok:1.18.24' // Убедитесь, что используете последнюю версию
+  annotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
 
 test {
