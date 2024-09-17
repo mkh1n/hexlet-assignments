@@ -3,7 +3,7 @@ package exercise;
 import lombok.Getter;
 
 @Getter
-public class Point{
+public class Point {
     private int x;
     private int y;
 
