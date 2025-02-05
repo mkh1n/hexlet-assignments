@@ -1,37 +1,42 @@
 package exercise.controller.users;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.ArrayList;
 import exercise.model.Post;
 import exercise.Data;
 
-// BEGIN
 @RestController
 @RequestMapping("/api")
 public class PostsController {
 
+    private static final List<Post> additionalPosts = new ArrayList<>();
+
     @GetMapping("/users/{id}/posts")
     @ResponseStatus(HttpStatus.OK)
-    public List<Post> index (@PathVariable int id) {
-        return Data.getPosts().stream().filter(p -> p.getUserId() == id).toList();
-
+    public List<Post> index(@PathVariable int id) {
+        return Stream.concat(Data.getPosts().stream(), additionalPosts.stream())
+                .filter(p -> p.getUserId() == id)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/users/{id}/posts")
     @ResponseStatus(HttpStatus.CREATED)
     public Post create(@PathVariable int id, @RequestBody Post post) {
+
         post.setUserId(id);
-        Data.getPosts().add(post);
-        return post;
+
+        Post responsePost = new Post();
+        responsePost.setUserId(post.getUserId());
+        responsePost.setSlug(post.getSlug());
+        responsePost.setTitle(post.getTitle());
+        responsePost.setBody(post.getBody());
+
+        additionalPosts.add(post);
+
+        return responsePost;
     }
 }
-// END
