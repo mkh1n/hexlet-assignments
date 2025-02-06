@@ -1,0 +1,26 @@
+# BEGIN
+---
+logging:
+  level:
+    root: WARN
+
+spring:
+  jpa:
+    generate-ddl: true
+    show-sql: true
+  jmx:
+    enabled: true
+  output:
+    ansi:
+      enabled: always
+
+server:
+  address: 0.0.0.0
+  port: 8080
+# Настройки пользователей
+users:
+  admins:
+    - gjoinsey1@blogger.com
+    - scrosi4@cam.ac.uk
+    - brundle@cam.ac.uk
+# END
